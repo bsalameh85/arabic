@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -9,7 +10,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
         
-    <!-- نفس تنسيقات القالب الأصلي لتضمن تطابق المظهر تماماً -->
     <style>
         * {
             box-sizing: border-box;
@@ -287,7 +287,7 @@
 <body>
     <main class="app-container">
         
-        <!-- شاشة الترحيب والإعداد (مطابقة تماماً للهيكل المعتمد) -->
+        <!-- شاشة الترحيب والإعداد -->
         <section id="welcome-screen" class="screen">
             <div class="card">
                 <img src="logo.png" alt="شعار المدرسة" class="logo-display">
@@ -360,7 +360,7 @@
             </div>
         </section>
 
-        <!-- شاشة اللعبة والأسئلة (مطابقة لنفس الأزرار والـ NAV) -->
+        <!-- شاشة اللعبة والأسئلة -->
         <section id="game-screen" class="screen hidden">
             <div class="card">
                 <nav class="nav-links">
@@ -406,12 +406,10 @@
 
     </main>
 
-    <!-- البرمجة والتفاعل المتوافق 100% مع عناصر القالب الأصلي -->
     <script>
-        // بنك كلمات لغوي مضبوط دقيق
         const wordsDatabase = [
             { word: "سَمَاءٌ", type: "اسم" }, { word: "كَتَبَ", type: "فعل" }, { word: "إِلَى", type: "حرف" },
-            { word: "مُعَلِّمٌ", type: "اسم" }, { word: "يَقْرَأُ", type: "فعل" }, { word: "عَنْ", type: "حرف" },
+            { word: "مُعَلِّـمٌ", type: "اسم" }, { word: "يَقْرَأُ", type: "فعل" }, { word: "عَنْ", type: "حرف" },
             { word: "شَجَرَةٌ", type: "اسم" }, { word: "اِرْكُضْ", type: "فعل" }, { word: "ثُمَّ", type: "حرف" },
             { word: "الْقَمَرُ", type: "اسم" }, { word: "يَسْتَمِعُ", type: "فعل" }, { word: "فِي", type: "حرف" },
             { word: "طَبِيبٌ", type: "اسم" }, { word: "سَافَرَ", type: "فعل" }, { word: "عَلَى", type: "حرف" },
@@ -419,7 +417,6 @@
             { word: "حَدِيقَةٌ", type: "اسم" }, { word: "تَعَلَّمَ", type: "فعل" }, { word: "أَوْ", type: "حرف" }
         ];
 
-        // العناصر المربوطة بالأكواد
         const childNameInput = document.getElementById('child-name');
         const tableSelect = document.getElementById('table-select');
         const questionCountInput = document.getElementById('question-count-input');
@@ -442,8 +439,8 @@
         let score = 0;
         let quizData = [];
         let userChoices = [];
+        let isTransitioning = false; // لمنع الضغط المزدوج أثناء الانتقال
 
-        // تفعيل الأزرار عند تعبئة الحقول الأساسية
         function checkInputs() {
             const valid = childNameInput.value.trim() !== "" && tableSelect.value !== "";
             learnBtn.disabled = !valid;
@@ -453,7 +450,6 @@
         childNameInput.addEventListener('input', checkInputs);
         tableSelect.addEventListener('change', checkInputs);
 
-        // رفع الصورة
         childPictureInput.addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
@@ -466,7 +462,6 @@
             }
         });
 
-        // تهيئة الجلسة
         function initSession() {
             childName = childNameInput.value.trim();
             selectedType = tableSelect.value;
@@ -479,7 +474,6 @@
             document.getElementById('results-player-pic').src = playerImage;
         }
 
-        // إنشاء الأسئلة
         function prepareQuiz() {
             let filtered = [...wordsDatabase];
             if (selectedType !== "all") {
@@ -492,6 +486,7 @@
             currentQuestionIndex = 0;
             score = 0;
             userChoices = new Array(quizData.length).fill(null);
+            isTransitioning = false;
         }
 
         function showScreen(screen) {
@@ -499,7 +494,6 @@
             screen.classList.remove('hidden');
         }
 
-        // أزرار بدء التعلم والاختبار
         learnBtn.addEventListener('click', () => {
             initSession();
             showScreen(learnScreen);
@@ -515,18 +509,15 @@
         testBtn.addEventListener('click', startQuiz);
         document.getElementById('start-quiz-from-learn-btn').addEventListener('click', startQuiz);
 
-        // عرض السؤال
         function renderCurrentQuestion() {
             const currentItem = quizData[currentQuestionIndex];
             document.getElementById('question-text').textContent = currentItem.word;
             document.getElementById('question-count').textContent = `${currentQuestionIndex + 1}/${quizData.length}`;
             document.getElementById('score').textContent = score;
 
-            // شريط التقدم
             const progress = ((currentQuestionIndex + 1) / quizData.length) * 100;
             document.getElementById('progress-bar').style.width = `${progress}%`;
 
-            // الخيارات (اسم - فعل - حرف)
             const answersContainer = document.getElementById('answers-container');
             answersContainer.innerHTML = '';
 
@@ -554,37 +545,52 @@
         }
 
         function selectAnswer(selectedType) {
+            if (isTransitioning) return; // منع التفاعل الثنائي السريع
+            isTransitioning = true;
+
             userChoices[currentQuestionIndex] = selectedType;
             if (selectedType === quizData[currentQuestionIndex].type) {
                 score++;
             }
+            
             renderCurrentQuestion();
+
+            // الانتقال التلقائي بعد ثانية واحدة (1000 مللي ثانية)
+            setTimeout(() => {
+                isTransitioning = false;
+                if (currentQuestionIndex < quizData.length - 1) {
+                    currentQuestionIndex++;
+                    renderCurrentQuestion();
+                } else {
+                    finishQuiz();
+                }
+            }, 1000);
         }
 
         const prevBtn = document.getElementById('prev-question-btn');
         const nextBtn = document.getElementById('next-question-btn');
 
         function updateNav() {
-            prevBtn.disabled = currentQuestionIndex === 0;
-            prevBtn.classList.toggle('nav-btn-disabled', currentQuestionIndex === 0);
+            prevBtn.disabled = currentQuestionIndex === 0 || isTransitioning;
+            prevBtn.classList.toggle('nav-btn-disabled', currentQuestionIndex === 0 || isTransitioning);
 
             const hasAnswered = userChoices[currentQuestionIndex] !== null;
-            nextBtn.disabled = !hasAnswered;
-            nextBtn.classList.toggle('nav-btn-disabled', !hasAnswered);
+            nextBtn.disabled = !hasAnswered || isTransitioning;
+            nextBtn.classList.toggle('nav-btn-disabled', !hasAnswered || isTransitioning);
         }
 
         prevBtn.addEventListener('click', () => {
-            if (currentQuestionIndex > 0) {
+            if (currentQuestionIndex > 0 && !isTransitioning) {
                 currentQuestionIndex--;
                 renderCurrentQuestion();
             }
         });
 
         nextBtn.addEventListener('click', () => {
-            if (currentQuestionIndex < quizData.length - 1) {
+            if (currentQuestionIndex < quizData.length - 1 && !isTransitioning) {
                 currentQuestionIndex++;
                 renderCurrentQuestion();
-            } else {
+            } else if (!isTransitioning) {
                 finishQuiz();
             }
         });
@@ -595,7 +601,6 @@
             msg.innerHTML = `رائع يا بطل <b>${childName}</b>!<br>لقد أنجزت الاختبار وحصلت على ${score} من ${quizData.length}`;
         }
 
-        // أزرار الرجوع للشاشة الرئيسية
         document.querySelectorAll('#back-to-home-from-learn, #back-to-home-from-game, #back-to-home-from-results').forEach(el => {
             el.addEventListener('click', (e) => {
                 e.preventDefault();
