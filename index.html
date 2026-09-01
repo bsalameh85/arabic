@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مغامرات أقسام الكلام التفاعلية</title>
-        
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-        
+    
     <style>
         * {
             box-sizing: border-box;
@@ -17,7 +17,6 @@
             margin: 0;
             padding: 0;
         }
-
         body {
             background-color: #f0f4f8;
             color: #2c3e50;
@@ -27,12 +26,10 @@
             min-height: 100vh;
             padding: 15px;
         }
-
         .app-container {
             width: 100%;
             max-width: 480px;
         }
-
         .card {
             background: #ffffff;
             border-radius: 20px;
@@ -42,46 +39,38 @@
             border: 2px solid #e2e8f0;
             position: relative;
         }
-
         .screen.hidden {
             display: none;
         }
-
         .logo-display {
             max-width: 90px;
             height: auto;
             margin-bottom: 5px;
         }
-
         .school-name {
             color: #1e3a8a;
             font-size: 1.1rem;
             font-weight: 700;
         }
-
         .student-credit {
             color: #059669;
             font-weight: 700;
             font-size: 0.95rem;
             margin-bottom: 15px;
         }
-
         h1 {
             font-size: 1.6rem;
             color: #1f2937;
             margin-bottom: 5px;
         }
-
         p {
             color: #4b5563;
             margin-bottom: 15px;
         }
-
         .input-group {
             text-align: right;
             margin-bottom: 15px;
         }
-
         .input-group label {
             display: block;
             font-weight: bold;
@@ -89,7 +78,6 @@
             color: #4b5563;
             font-size: 0.9rem;
         }
-
         .input-group input[type="text"],
         .input-group input[type="number"],
         .input-group select {
@@ -101,11 +89,9 @@
             outline: none;
             transition: 0.2s;
         }
-
         .input-group input:focus, .input-group select:focus {
             border-color: #2563eb;
         }
-
         #image-preview {
             width: 60px;
             height: 60px;
@@ -115,13 +101,11 @@
             border: 2px solid #3b82f6;
             display: block;
         }
-
         #action-buttons {
             display: flex;
             gap: 10px;
             margin-top: 15px;
         }
-
         button, .nav-btn {
             border: none;
             padding: 12px 18px;
@@ -131,27 +115,23 @@
             cursor: pointer;
             transition: 0.2s;
         }
-
         #learn-btn {
             background-color: #3b82f6;
             color: white;
             flex: 1;
         }
-
         #test-btn, #start-quiz-from-learn-btn, #restart-btn {
             background-color: #10b981;
             color: white;
             flex: 1;
             width: 100%;
         }
-
         button:disabled, .nav-btn-disabled {
             background-color: #cbd5e1 !important;
             color: #94a3b8 !important;
             cursor: not-allowed;
             opacity: 0.7;
         }
-
         .back-link {
             display: inline-block;
             color: #6b7280;
@@ -161,14 +141,12 @@
             margin-bottom: 10px;
             cursor: pointer;
         }
-
         .player-info {
             display: flex;
             align-items: center;
             gap: 10px;
             margin-bottom: 15px;
         }
-
         .player-info img, #results-player-pic {
             width: 45px;
             height: 45px;
@@ -176,25 +154,21 @@
             object-fit: cover;
             border: 2px solid #10b981;
         }
-
         .player-info span {
             font-weight: bold;
             color: #1f2937;
         }
-
         .nav-links {
             display: flex;
             justify-content: space-between;
             margin-bottom: 15px;
         }
-
         .nav-btn {
             background-color: #e2e8f0;
             color: #334155;
             padding: 8px 14px;
             font-size: 0.85rem;
         }
-
         .progress-bar-container {
             background-color: #e2e8f0;
             height: 10px;
@@ -202,14 +176,12 @@
             overflow: hidden;
             margin-bottom: 15px;
         }
-
         #progress-bar {
             width: 0%;
             height: 100%;
             background-color: #10b981;
             transition: width 0.3s;
         }
-
         .score-board {
             display: flex;
             justify-content: space-between;
@@ -217,11 +189,9 @@
             color: #475569;
             margin-bottom: 20px;
         }
-
         .question-area {
             margin-top: 10px;
         }
-
         #question-text {
             font-size: 2.2rem;
             color: #1e293b;
@@ -231,13 +201,11 @@
             border-radius: 12px;
             border: 2px dashed #cbd5e1;
         }
-
         .answers-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 10px;
         }
-
         .answer-btn {
             background-color: #f1f5f9;
             color: #1e293b;
@@ -247,24 +215,40 @@
             border-radius: 10px;
             width: 100%;
         }
-
         .answer-btn:hover:not(:disabled) {
             background-color: #e2e8f0;
         }
-
         .answer-btn.correct {
             background-color: #10b981 !important;
             color: white !important;
             border-color: #059669 !important;
         }
-
         .answer-btn.wrong {
             background-color: #ef4444 !important;
             color: white !important;
             border-color: #dc2626 !important;
         }
-
-        /* تنسيقات الجدول الخاص بالتعليم */
+        .explanation-box {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            text-align: right;
+            line-height: 1.5;
+            display: none;
+        }
+        .explanation-box.show-wrong {
+            display: block !important;
+            background-color: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+        .explanation-box.show-correct {
+            display: block !important;
+            background-color: #ecfdf5;
+            color: #065f46;
+            border: 1px solid #6ee7b7;
+        }
         .grammar-guide {
             text-align: right;
             margin: 15px 0;
@@ -272,21 +256,18 @@
             flex-direction: column;
             gap: 10px;
         }
-
         .guide-box {
             background: #f8fafc;
             border-right: 4px solid #3b82f6;
             padding: 10px 15px;
             border-radius: 8px;
         }
-
         .guide-box h4 { color: #1e3a8a; }
         .guide-box p { margin-bottom: 0; font-size: 0.9rem; }
     </style>
 </head>
 <body>
     <main class="app-container">
-        
         <!-- شاشة الترحيب والإعداد -->
         <section id="welcome-screen" class="screen">
             <div class="card">
@@ -353,7 +334,7 @@
                     </div>
                     <div class="guide-box" style="border-color: #3b82f6;">
                         <h4>3. الحَـرْفُ 🔗</h4>
-                        <p>كلمة يربط الجمل ولا يكتمل معناه إلا مع غيره (مثل: مِنْ، إِلَى، عَلَى).</p>
+                        <p>كلمة تربط الجمل ولا يكتمل معناها إلا مع غيرها (مثل: مِنْ، إِلَى، عَلَى).</p>
                     </div>
                 </div>
                 <button id="start-quiz-from-learn-btn">ابدأ الاختبار الآن!</button>
@@ -387,6 +368,7 @@
                     <p style="color:#64748b; font-size: 0.95rem;">ما هو قسم الكلمة الموضحة؟</p>
                     <h2 id="question-text">شَجَرَةٌ</h2>
                     <div id="answers-container" class="answers-grid"></div>
+                    <div id="explanation-box" class="explanation-box"></div>
                 </div>
             </div>
         </section>
@@ -403,18 +385,31 @@
                 <button id="restart-btn">العب مرة أخرى</button>
             </div>
         </section>
-
     </main>
 
     <script>
         const wordsDatabase = [
-            { word: "سَمَاءٌ", type: "اسم" }, { word: "كَتَبَ", type: "فعل" }, { word: "إِلَى", type: "حرف" },
-            { word: "مُعَلِّـمٌ", type: "اسم" }, { word: "يَقْرَأُ", type: "فعل" }, { word: "عَنْ", type: "حرف" },
-            { word: "شَجَرَةٌ", type: "اسم" }, { word: "اِرْكُضْ", type: "فعل" }, { word: "ثُمَّ", type: "حرف" },
-            { word: "الْقَمَرُ", type: "اسم" }, { word: "يَسْتَمِعُ", type: "فعل" }, { word: "فِي", type: "حرف" },
-            { word: "طَبِيبٌ", type: "اسم" }, { word: "سَافَرَ", type: "فعل" }, { word: "عَلَى", type: "حرف" },
-            { word: "مَدْرَسَةٌ", type: "اسم" }, { word: "يَرْسُمُ", type: "فعل" }, { word: "مِنْ", type: "حرف" },
-            { word: "حَدِيقَةٌ", type: "اسم" }, { word: "تَعَلَّمَ", type: "فعل" }, { word: "أَوْ", type: "حرف" }
+            { word: "سَمَاءٌ", type: "اسم", reason: "اسم لأنه يدل على شيء ملموس/محسوس ولا يقترن بزمن، ويمكن إدخال (الـ) عليه (السماء)." },
+            { word: "كَتَبَ", type: "فعل", reason: "فعل لأنه يدل على حدث الكتابة وانتهى في الزمن الماضي." },
+            { word: "إِلَى", type: "حرف", reason: "حرف لأنه لا يظهر معناه كاملاً إلا عندما ينضم في جملة مفيدة." },
+            { word: "مُعَلِّـمٌ", type: "اسم", reason: "اسم لأنه يدل على شخص وتقبل التنوين (معلّمٌ)." },
+            { word: "يَقْرَأُ", type: "فعل", reason: "فعل لأنه يدل على حدث القراءة المستمر في الزمن الحاضر (المضارع)." },
+            { word: "عَنْ", type: "حرف", reason: "حرف من حروف الجر التي تربط الألفاظ داخل الجملة." },
+            { word: "شَجَرَةٌ", type: "اسم", reason: "اسم لأنه يحتوي على تاء مربوطة وتنوين، وهي من علامات الأسماء." },
+            { word: "اِرْكُضْ", type: "فعل", reason: "فعل لأنه يدل على طلب القيام بعمل (فعل أمر)." },
+            { word: "ثُمَّ", type: "حرف", reason: "حرف من حروف العطف يربط بين الكلمات أو الجمل." },
+            { word: "الْقَمَرُ", type: "اسم", reason: "اسم لأنه يبدأ بـ (الـ) التعريف، وهي من علامات الأسماء." },
+            { word: "يَسْتَمِعُ", type: "فعل", reason: "فعل مضارع يدل على حدث الاستماع في الوقت الحالي." },
+            { word: "فِي", type: "حرف", reason: "حرف جر لا يعطي معنىً كاملاً بمفرده." },
+            { word: "طَبِيبٌ", type: "اسم", reason: "اسم يدل على مهنة شخص ويقبل التنوين." },
+            { word: "سَافَرَ", type: "فعل", reason: "فعل ماضٍ يدل على حصول السفر وانتهائه." },
+            { word: "عَلَى", type: "حرف", reason: "حرف جر يربط الأسماء بالكلمات التي قبلها." },
+            { word: "مَدْرَسَةٌ", type: "اسم", reason: "اسم يختم بتاء مربوطة ويقبل التنوين." },
+            { word: "يَرْسُمُ", type: "فعل", reason: "فعل مضارع مقترن بالزمن الحالي." },
+            { word: "مِنْ", type: "حرف", reason: "حرف جر ليس له معنى مستقل إلا في الجملة." },
+            { word: "حَدِيقَةٌ", type: "اسم", reason: "اسم يدل على مكان ويقبل التنوين." },
+            { word: "تَعَلَّمَ", type: "فعل", reason: "فعل ماضٍ يدل على حدث التعلم." },
+            { word: "أَوْ", type: "حرف", reason: "حرف عطف يفيد التخيير ولا يكتمل معناه إلا مع غيره." }
         ];
 
         const childNameInput = document.getElementById('child-name');
@@ -439,7 +434,7 @@
         let score = 0;
         let quizData = [];
         let userChoices = [];
-        let isTransitioning = false; // لمنع الضغط المزدوج أثناء الانتقال
+        let isTransitioning = false;
 
         function checkInputs() {
             const valid = childNameInput.value.trim() !== "" && tableSelect.value !== "";
@@ -479,9 +474,10 @@
             if (selectedType !== "all") {
                 filtered = wordsDatabase.filter(item => item.type === selectedType);
             }
-            
             filtered.sort(() => Math.random() - 0.5);
-            quizData = filtered.slice(0, totalQuestions);
+            
+            const requestedCount = Math.min(totalQuestions, filtered.length);
+            quizData = filtered.slice(0, requestedCount);
 
             currentQuestionIndex = 0;
             score = 0;
@@ -521,6 +517,11 @@
             const answersContainer = document.getElementById('answers-container');
             answersContainer.innerHTML = '';
 
+            // تصفير شريط السبب
+            const expBox = document.getElementById('explanation-box');
+            expBox.className = 'explanation-box';
+            expBox.style.display = 'none';
+
             ["اسم", "فعل", "حرف"].forEach(type => {
                 const btn = document.createElement('button');
                 btn.className = 'answer-btn';
@@ -541,21 +542,44 @@
                 answersContainer.appendChild(btn);
             });
 
+            // إظهار التوضيح إذا أجاب الطالب سابقاً
+            if (userChoices[currentQuestionIndex] !== null) {
+                showExplanation(userChoices[currentQuestionIndex], currentItem);
+            }
+
             updateNav();
         }
 
+        function showExplanation(chosen, currentItem) {
+            const expBox = document.getElementById('explanation-box');
+            if (chosen === currentItem.type) {
+                expBox.className = 'explanation-box show-correct';
+                expBox.innerHTML = `<b>إجابة صحيحة! 🎉</b><br>${currentItem.reason}`;
+            } else {
+                expBox.className = 'explanation-box show-wrong';
+                expBox.innerHTML = `<b>إجابة خاطئة! ❌</b><br>الصواب أنها <b>(${currentItem.type})</b>، وذلك لأنها: ${currentItem.reason}`;
+            }
+        }
+
         function selectAnswer(selectedType) {
-            if (isTransitioning) return; // منع التفاعل الثنائي السريع
+            if (isTransitioning) return;
             isTransitioning = true;
 
+            const currentItem = quizData[currentQuestionIndex];
             userChoices[currentQuestionIndex] = selectedType;
-            if (selectedType === quizData[currentQuestionIndex].type) {
+            
+            const isCorrect = selectedType === currentItem.type;
+            if (isCorrect) {
                 score++;
             }
             
+            // إظهار النتيجة والتوضيح فوراً
             renderCurrentQuestion();
+            showExplanation(selectedType, currentItem);
 
-            // الانتقال التلقائي بعد ثانية واحدة (1000 مللي ثانية)
+            // تأخير أطول (3.5 ثانية) إذا كانت الإجابة خاطئة ليتمكن الطالب من قراءة سبب الخطأ
+            const delay = isCorrect ? 1200 : 3500;
+
             setTimeout(() => {
                 isTransitioning = false;
                 if (currentQuestionIndex < quizData.length - 1) {
@@ -564,7 +588,7 @@
                 } else {
                     finishQuiz();
                 }
-            }, 1000);
+            }, delay);
         }
 
         const prevBtn = document.getElementById('prev-question-btn');
