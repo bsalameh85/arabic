@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مغامرات أقسام الكلام التفاعلية</title>
+        
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+        
+    <!-- نفس تنسيقات القالب الأصلي لتضمن تطابق المظهر تماماً -->
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #f0f4f8;
+            color: #2c3e50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 15px;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            border: 2px solid #e2e8f0;
+            position: relative;
+        }
+
+        .screen.hidden {
+            display: none;
+        }
+
+        .logo-display {
+            max-width: 90px;
+            height: auto;
+            margin-bottom: 5px;
+        }
+
+        .school-name {
+            color: #1e3a8a;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .student-credit {
+            color: #059669;
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+
+        p {
+            color: #4b5563;
+            margin-bottom: 15px;
+        }
+
+        .input-group {
+            text-align: right;
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #4b5563;
+            font-size: 0.9rem;
+        }
+
+        .input-group input[type="text"],
+        .input-group input[type="number"],
+        .input-group select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            border-color: #2563eb;
+        }
+
+        #image-preview {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-top: 8px;
+            border: 2px solid #3b82f6;
+            display: block;
+        }
+
+        #action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        button, .nav-btn {
+            border: none;
+            padding: 12px 18px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        #learn-btn {
+            background-color: #3b82f6;
+            color: white;
+            flex: 1;
+        }
+
+        #test-btn, #start-quiz-from-learn-btn, #restart-btn {
+            background-color: #10b981;
+            color: white;
+            flex: 1;
+            width: 100%;
+        }
+
+        button:disabled, .nav-btn-disabled {
+            background-color: #cbd5e1 !important;
+            color: #94a3b8 !important;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #6b7280;
+            text-decoration: underline;
+            float: right;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .player-info img, #results-player-pic {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #10b981;
+        }
+
+        .player-info span {
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .nav-btn {
+            background-color: #e2e8f0;
+            color: #334155;
+            padding: 8px 14px;
+            font-size: 0.85rem;
+        }
+
+        .progress-bar-container {
+            background-color: #e2e8f0;
+            height: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        #progress-bar {
+            width: 0%;
+            height: 100%;
+            background-color: #10b981;
+            transition: width 0.3s;
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            color: #475569;
+            margin-bottom: 20px;
+        }
+
+        .question-area {
+            margin-top: 10px;
+        }
+
+        #question-text {
+            font-size: 2.2rem;
+            color: #1e293b;
+            margin: 15px 0;
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 12px;
+            border: 2px dashed #cbd5e1;
+        }
+
+        .answers-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        .answer-btn {
+            background-color: #f1f5f9;
+            color: #1e293b;
+            border: 2px solid #cbd5e1;
+            padding: 12px;
+            font-size: 1.2rem;
+            border-radius: 10px;
+            width: 100%;
+        }
+
+        .answer-btn:hover:not(:disabled) {
+            background-color: #e2e8f0;
+        }
+
+        .answer-btn.correct {
+            background-color: #10b981 !important;
+            color: white !important;
+            border-color: #059669 !important;
+        }
+
+        .answer-btn.wrong {
+            background-color: #ef4444 !important;
+            color: white !important;
+            border-color: #dc2626 !important;
+        }
+
+        /* تنسيقات الجدول الخاص بالتعليم */
+        .grammar-guide {
+            text-align: right;
+            margin: 15px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .guide-box {
+            background: #f8fafc;
+            border-right: 4px solid #3b82f6;
+            padding: 10px 15px;
+            border-radius: 8px;
+        }
+
+        .guide-box h4 { color: #1e3a8a; }
+        .guide-box p { margin-bottom: 0; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <main class="app-container">
+        
+        <!-- شاشة الترحيب والإعداد (مطابقة تماماً للهيكل المعتمد) -->
+        <section id="welcome-screen" class="screen">
+            <div class="card">
+                <img src="logo.png" alt="شعار المدرسة" class="logo-display">
+                <h3 class="school-name">مدرسة وروضة لؤلؤة مادبا النموذجية</h3>
+                <p class="student-credit">عمل الطالبة: ملك باسم سلامه</p>
+                
+                <h1>أهلاً أيها البطل! 🚀</h1>
+                <p>اختر نوع الاختبار وابدأ المغامرة!</p>
+                
+                <div class="input-group">
+                    <label for="child-name">ما هو اسمك؟</label>
+                    <input type="text" id="child-name" placeholder="اكتب اسمك هنا" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="table-select">اختر قسم الكلام</label>
+                    <select id="table-select" required>
+                        <option value="" disabled selected>اختر قسم الكلام</option>
+                        <option value="all">اختبار جميع الأقسام 🔥</option>
+                        <option value="اسم">قسم الأسماء 🌸</option>
+                        <option value="فعل">قسم الأفعال 🏃</option>
+                        <option value="حرف">قسم الحروف 🔗</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="question-count-input">كم سؤالاً تريد أن تحل؟</label>
+                    <input type="number" id="question-count-input" min="5" max="30" value="10" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="child-picture">اختر صورتك الرائعة (اختياري)</label>
+                    <input type="file" id="child-picture" accept="image/*">
+                    <img id="image-preview" src="https://via.placeholder.com/100" alt="معاينة الصورة">
+                </div>
+
+                <div id="action-buttons">
+                    <button id="learn-btn" disabled>ابدأ التعلم</button>
+                    <button id="test-btn" disabled>ابدأ الاختبار</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- شاشة التعلم والتدريب -->
+        <section id="learn-screen" class="screen hidden">
+            <div class="card">
+                <a href="#" id="back-to-home-from-learn" class="back-link">الشاشة الرئيسية</a>
+
+                <header class="player-info">
+                    <img id="player-pic-learn" src="https://via.placeholder.com/100" alt="صورة اللاعب">
+                    <span id="player-name-learn"></span>
+                </header>
+
+                <h2>لنتعلم أقسام الكلام معاً 📚</h2>
+                <div class="grammar-guide">
+                    <div class="guide-box" style="border-color: #ef4444;">
+                        <h4>1. الأسـمُ 🌸</h4>
+                        <p>كلمة تدل على شيء غير مقترن بزمن (مثل: مَدْرَسَة، طَالِب، زَهْرَة).</p>
+                    </div>
+                    <div class="guide-box" style="border-color: #10b981;">
+                        <h4>2. الفِـعْـلُ 🏃</h4>
+                        <p>كلمة تدل على حدث مرتبطة بزمن (مثل: كَتَبَ، يَقْرَأُ، اِرْكُضْ).</p>
+                    </div>
+                    <div class="guide-box" style="border-color: #3b82f6;">
+                        <h4>3. الحَـرْفُ 🔗</h4>
+                        <p>كلمة يربط الجمل ولا يكتمل معناه إلا مع غيره (مثل: مِنْ، إِلَى، عَلَى).</p>
+                    </div>
+                </div>
+                <button id="start-quiz-from-learn-btn">ابدأ الاختبار الآن!</button>
+            </div>
+        </section>
+
+        <!-- شاشة اللعبة والأسئلة (مطابقة لنفس الأزرار والـ NAV) -->
+        <section id="game-screen" class="screen hidden">
+            <div class="card">
+                <nav class="nav-links">
+                    <button id="back-to-home-from-game" class="nav-btn">الشاشة الرئيسية</button>
+                    <button id="prev-question-btn" class="nav-btn nav-btn-disabled" disabled>السابق</button>
+                    <button id="next-question-btn" class="nav-btn nav-btn-disabled" disabled>التالي</button>
+                </nav>
+
+                <header class="player-info">
+                    <img id="player-pic" src="https://via.placeholder.com/100" alt="صورة اللاعب">
+                    <span id="player-name"></span>
+                </header>
+
+                <div class="progress-bar-container">
+                    <div id="progress-bar"></div>
+                </div>
+
+                <div class="score-board">
+                    <div class="score-item">النقاط: <span id="score">0</span></div>
+                    <div class="score-item">السؤال: <span id="question-count">1/10</span></div>
+                </div>
+
+                <div class="question-area">
+                    <p style="color:#64748b; font-size: 0.95rem;">ما هو قسم الكلمة الموضحة؟</p>
+                    <h2 id="question-text">شَجَرَةٌ</h2>
+                    <div id="answers-container" class="answers-grid"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- شاشة النتائج -->
+        <section id="results-screen" class="screen hidden">
+            <div class="card">
+                <a href="#" id="back-to-home-from-results" class="back-link">الشاشة الرئيسية</a>
+
+                <img id="results-player-pic" src="https://via.placeholder.com/100" alt="صورة اللاعب">
+                <img src="logo.png" alt="شعار المدرسة" class="logo-display" style="margin-top:10px;">
+                <h2 id="result-title">انتهت المغامرة!</h2>
+                <p id="final-message"></p>
+                <button id="restart-btn">العب مرة أخرى</button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- البرمجة والتفاعل المتوافق 100% مع عناصر القالب الأصلي -->
+    <script>
+        // بنك كلمات لغوي مضبوط دقيق
+        const wordsDatabase = [
+            { word: "سَمَاءٌ", type: "اسم" }, { word: "كَتَبَ", type: "فعل" }, { word: "إِلَى", type: "حرف" },
+            { word: "مُعَلِّمٌ", type: "اسم" }, { word: "يَقْرَأُ", type: "فعل" }, { word: "عَنْ", type: "حرف" },
+            { word: "شَجَرَةٌ", type: "اسم" }, { word: "اِرْكُضْ", type: "فعل" }, { word: "ثُمَّ", type: "حرف" },
+            { word: "الْقَمَرُ", type: "اسم" }, { word: "يَسْتَمِعُ", type: "فعل" }, { word: "فِي", type: "حرف" },
+            { word: "طَبِيبٌ", type: "اسم" }, { word: "سَافَرَ", type: "فعل" }, { word: "عَلَى", type: "حرف" },
+            { word: "مَدْرَسَةٌ", type: "اسم" }, { word: "يَرْسُمُ", type: "فعل" }, { word: "مِنْ", type: "حرف" },
+            { word: "حَدِيقَةٌ", type: "اسم" }, { word: "تَعَلَّمَ", type: "فعل" }, { word: "أَوْ", type: "حرف" }
+        ];
+
+        // العناصر المربوطة بالأكواد
+        const childNameInput = document.getElementById('child-name');
+        const tableSelect = document.getElementById('table-select');
+        const questionCountInput = document.getElementById('question-count-input');
+        const childPictureInput = document.getElementById('child-picture');
+        const imagePreview = document.getElementById('image-preview');
+
+        const learnBtn = document.getElementById('learn-btn');
+        const testBtn = document.getElementById('test-btn');
+
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const learnScreen = document.getElementById('learn-screen');
+        const gameScreen = document.getElementById('game-screen');
+        const resultsScreen = document.getElementById('results-screen');
+
+        let childName = "";
+        let playerImage = "https://via.placeholder.com/100";
+        let selectedType = "";
+        let totalQuestions = 10;
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let quizData = [];
+        let userChoices = [];
+
+        // تفعيل الأزرار عند تعبئة الحقول الأساسية
+        function checkInputs() {
+            const valid = childNameInput.value.trim() !== "" && tableSelect.value !== "";
+            learnBtn.disabled = !valid;
+            testBtn.disabled = !valid;
+        }
+
+        childNameInput.addEventListener('input', checkInputs);
+        tableSelect.addEventListener('change', checkInputs);
+
+        // رفع الصورة
+        childPictureInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    playerImage = evt.target.result;
+                    imagePreview.src = playerImage;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // تهيئة الجلسة
+        function initSession() {
+            childName = childNameInput.value.trim();
+            selectedType = tableSelect.value;
+            totalQuestions = parseInt(questionCountInput.value) || 10;
+
+            document.getElementById('player-name').textContent = childName;
+            document.getElementById('player-pic').src = playerImage;
+            document.getElementById('player-name-learn').textContent = childName;
+            document.getElementById('player-pic-learn').src = playerImage;
+            document.getElementById('results-player-pic').src = playerImage;
+        }
+
+        // إنشاء الأسئلة
+        function prepareQuiz() {
+            let filtered = [...wordsDatabase];
+            if (selectedType !== "all") {
+                filtered = wordsDatabase.filter(item => item.type === selectedType);
+            }
+            
+            filtered.sort(() => Math.random() - 0.5);
+            quizData = filtered.slice(0, totalQuestions);
+
+            currentQuestionIndex = 0;
+            score = 0;
+            userChoices = new Array(quizData.length).fill(null);
+        }
+
+        function showScreen(screen) {
+            [welcomeScreen, learnScreen, gameScreen, resultsScreen].forEach(s => s.classList.add('hidden'));
+            screen.classList.remove('hidden');
+        }
+
+        // أزرار بدء التعلم والاختبار
+        learnBtn.addEventListener('click', () => {
+            initSession();
+            showScreen(learnScreen);
+        });
+
+        function startQuiz() {
+            initSession();
+            prepareQuiz();
+            showScreen(gameScreen);
+            renderCurrentQuestion();
+        }
+
+        testBtn.addEventListener('click', startQuiz);
+        document.getElementById('start-quiz-from-learn-btn').addEventListener('click', startQuiz);
+
+        // عرض السؤال
+        function renderCurrentQuestion() {
+            const currentItem = quizData[currentQuestionIndex];
+            document.getElementById('question-text').textContent = currentItem.word;
+            document.getElementById('question-count').textContent = `${currentQuestionIndex + 1}/${quizData.length}`;
+            document.getElementById('score').textContent = score;
+
+            // شريط التقدم
+            const progress = ((currentQuestionIndex + 1) / quizData.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+
+            // الخيارات (اسم - فعل - حرف)
+            const answersContainer = document.getElementById('answers-container');
+            answersContainer.innerHTML = '';
+
+            ["اسم", "فعل", "حرف"].forEach(type => {
+                const btn = document.createElement('button');
+                btn.className = 'answer-btn';
+                btn.textContent = type;
+
+                if (userChoices[currentQuestionIndex] !== null) {
+                    btn.disabled = true;
+                    if (type === currentItem.type) {
+                        btn.classList.add('correct');
+                    }
+                    if (userChoices[currentQuestionIndex] === type && type !== currentItem.type) {
+                        btn.classList.add('wrong');
+                    }
+                } else {
+                    btn.onclick = () => selectAnswer(type);
+                }
+
+                answersContainer.appendChild(btn);
+            });
+
+            updateNav();
+        }
+
+        function selectAnswer(selectedType) {
+            userChoices[currentQuestionIndex] = selectedType;
+            if (selectedType === quizData[currentQuestionIndex].type) {
+                score++;
+            }
+            renderCurrentQuestion();
+        }
+
+        const prevBtn = document.getElementById('prev-question-btn');
+        const nextBtn = document.getElementById('next-question-btn');
+
+        function updateNav() {
+            prevBtn.disabled = currentQuestionIndex === 0;
+            prevBtn.classList.toggle('nav-btn-disabled', currentQuestionIndex === 0);
+
+            const hasAnswered = userChoices[currentQuestionIndex] !== null;
+            nextBtn.disabled = !hasAnswered;
+            nextBtn.classList.toggle('nav-btn-disabled', !hasAnswered);
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderCurrentQuestion();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentQuestionIndex < quizData.length - 1) {
+                currentQuestionIndex++;
+                renderCurrentQuestion();
+            } else {
+                finishQuiz();
+            }
+        });
+
+        function finishQuiz() {
+            showScreen(resultsScreen);
+            const msg = document.getElementById('final-message');
+            msg.innerHTML = `رائع يا بطل <b>${childName}</b>!<br>لقد أنجزت الاختبار وحصلت على ${score} من ${quizData.length}`;
+        }
+
+        // أزرار الرجوع للشاشة الرئيسية
+        document.querySelectorAll('#back-to-home-from-learn, #back-to-home-from-game, #back-to-home-from-results').forEach(el => {
+            el.addEventListener('click', (e) => {
+                e.preventDefault();
+                showScreen(welcomeScreen);
+            });
+        });
+
+        document.getElementById('restart-btn').addEventListener('click', () => showScreen(welcomeScreen));
+    </script>
+</body>
+</html>
